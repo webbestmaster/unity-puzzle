@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
 
         if (pointer != null && isActive)
         {
-            Debug.Log("pointer - " + pointer.Value);
+            // Debug.Log("pointer - " + pointer.Value);
             rigitbody
                 .AddForce(
                     (pointer.Value - gameObject.transform.position).normalized
@@ -40,8 +40,8 @@ public class Item : MonoBehaviour
 
     private Vector3? GetPointPosition()
     {
-        Debug.Log("Input.touchCount: " + Input.touchCount);
-        Debug.Log("Input.mousePosition.x: " + Input.mousePosition.x);
+        // Debug.Log("Input.touchCount: " + Input.touchCount);
+        // Debug.Log("Input.mousePosition.x: " + Input.mousePosition.x);
 
         /*
         if (Input.touchCount > 0)
