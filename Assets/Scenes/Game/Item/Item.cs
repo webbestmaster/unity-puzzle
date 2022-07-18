@@ -3,12 +3,14 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     private Rigidbody rigitbody;
-    [SerializeField] private Camera m_MainCamera;
+    private bool isActive;
+    private Camera mainCamera;
 
     // Start is called before the first frame update
     private void Start()
     {
         rigitbody = GetComponent<Rigidbody>();
+        mainCamera = FindObjectOfType<Camera>();
     }
 
     // Update is called once per frame
@@ -19,18 +21,29 @@ public class Item : MonoBehaviour
 
         Vector3? pointer = GetPointPosition();
 
-        if (pointer != null)
+        if (!Input.GetMouseButton(0))
+        {
+            isActive = false;
+        }
+
+        if (pointer != null && isActive)
         {
             Debug.Log("pointer - " + pointer.Value);
-            rigitbody.AddForce(
-                (pointer.Value - gameObject.transform.position).normalized
-                * Time.deltaTime * 1000
-            );
+            rigitbody
+                .AddForce(
+                    (pointer.Value - gameObject.transform.position).normalized
+                    * Time.deltaTime * 1000,
+                    ForceMode.Force
+                );
         }
     }
 
     private Vector3? GetPointPosition()
     {
+        Debug.Log("Input.touchCount: " + Input.touchCount);
+        Debug.Log("Input.mousePosition.x: " + Input.mousePosition.x);
+
+        /*
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -43,19 +56,26 @@ public class Item : MonoBehaviour
                 )
             );
         }
+        */
 
         if (Input.GetMouseButton(0))
         {
-            return m_MainCamera
+            return mainCamera
                 .ScreenToWorldPoint(
                     new Vector3(
                         Input.mousePosition.x,
                         Input.mousePosition.y,
-                        m_MainCamera.transform.position.y
+                        mainCamera.transform.position.y
                     )
                 );
         }
 
         return null;
+    }
+    
+    void OnMouseDown()
+    {
+        // Destroy the gameObject after clicking on it
+        isActive = true;
     }
 }
