@@ -492,7 +492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1114158716
 Transform:
   m_ObjectHideFlags: 0
@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3386678079209643894, guid: a06589573b61ec940aaac2cacb35c8c9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a06589573b61ec940aaac2cacb35c8c9, type: 3}
@@ -629,8 +629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab6b21ac6acbcd408a179432721c373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bottomDesk: {fileID: 3386678079209643894, guid: a06589573b61ec940aaac2cacb35c8c9, type: 3}
-  border: {fileID: 975404364101353212, guid: 8249f3ba454ba4c44af2c615b3319c61, type: 3}
+  prefabBottomDesk: {fileID: 3386678079209643894, guid: a06589573b61ec940aaac2cacb35c8c9, type: 3}
+  prefabBorder: {fileID: 975404364101353212, guid: 8249f3ba454ba4c44af2c615b3319c61, type: 3}
+  prefabItem: {fileID: 8915914795695708073, guid: 65c6861f374826042ab424a55026799a, type: 3}
 --- !u!4 &1689269594
 Transform:
   m_ObjectHideFlags: 0
