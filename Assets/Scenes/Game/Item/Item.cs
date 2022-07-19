@@ -5,6 +5,7 @@ public class Item : MonoBehaviour
     private Rigidbody rigitbody;
     private bool isActive;
     private Camera mainCamera;
+    public Vector3 defaultPosition;
 
     // Start is called before the first frame update
     private void Start()
@@ -28,11 +29,12 @@ public class Item : MonoBehaviour
 
         if (pointer != null && isActive)
         {
-            // Debug.Log("pointer - " + pointer.Value);
+            Debug.Log("pos " + transform.position);
+            Debug.Log("def " + defaultPosition);
             rigitbody
                 .AddForce(
                     (pointer.Value - gameObject.transform.position).normalized
-                    * Time.deltaTime * 1000,
+                    * Time.deltaTime * 10000,
                     ForceMode.Force
                 );
         }
