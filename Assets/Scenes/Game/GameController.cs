@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,11 +9,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject prefabItem;
     private int fieldWidthInUnit = 5;
     private int fieldHeightInUnit = 3;
-    private int fullFieldWidth = 10;
-    private int fullFieldHeight = 10;
+    private float fullFieldWidth = 10f;
+    private float fullFieldHeight = 10f;
     private float borderWidth = 0.2f;
     private float borderHeight = 0.5f;
-    private List<Vector3> spanPoints = new List<Vector3>();
+    private List<Vector3> spanPointList = new List<Vector3>();
+    private List<GameObject> itemList = new List<GameObject>();
     private Vector3 gameRectangleLeftTop;
     private Vector3 gameRectangleBottomRight;
 
@@ -125,12 +126,13 @@ public class GameController : MonoBehaviour
         {
             for (int itemIndexZ = 0; itemIndexZ < fieldHeightInUnit; itemIndexZ++)
             {
-                AddItemToSceneByIndex(itemIndexX, itemIndexZ);
+                GameObject item = AddItemToSceneByIndex(itemIndexX, itemIndexZ);
+                itemList.Add(item);
             }
         }
     }
 
-    private void AddItemToSceneByIndex(int indexX, int indexZ)
+    private GameObject AddItemToSceneByIndex(int indexX, int indexZ)
     {
         Vector3 itemSize = GetItemSize();
 
@@ -146,7 +148,7 @@ public class GameController : MonoBehaviour
             xPosition,
             2 + indexZ * fieldWidthInUnit + indexX,
             -zPosition
-            );
+        );
         item.transform.localScale = new Vector3(
             itemWidth - spaceBetweenItems,
             itemSizeY,
@@ -157,12 +159,18 @@ public class GameController : MonoBehaviour
             xPosition,
             itemSizeY / 2,
             -zPosition
-            );
+        );
 
         if (indexX + 1 == fieldWidthInUnit && indexZ + 1 == fieldHeightInUnit)
         {
             item.SetActive(false);
         }
+
+        item.GetComponent<Item>().spanPointList = spanPointList;
+        item.GetComponent<Item>().cellSize = itemSize;
+        item.GetComponent<Item>().itemList = itemList;
+
+        return item;
     }
 
     private void PopulateSnapPoints()
@@ -180,11 +188,7 @@ public class GameController : MonoBehaviour
                 float xPosition = itemIndexX * itemWidth + itemWidth / 2f + gameRectangleLeftTop.x;
                 float zPosition = itemIndexZ * itemHeight + itemHeight / 2f - gameRectangleLeftTop.z;
 
-                // make smth like this
-                // [[0,0], [0,1], [0,2]],
-                // [[1,0], [1,1], [1,2]],
-                // [[2,0], [2,1], [2,2]],
-                spanPoints.Add(new Vector3(xPosition, yPosition, -zPosition));
+                spanPointList.Add(new Vector3(-xPosition, yPosition, -zPosition));
             }
         }
     }
@@ -193,9 +197,9 @@ public class GameController : MonoBehaviour
     {
         // 3f - actually magic number, just make item more plan
         float heightCoefficient = 3f;
-        float itemSizeX = -gameRectangleLeftTop.x / (float)fieldWidthInUnit * 2;
-        float itemSizeZ = gameRectangleLeftTop.z / (float)fieldHeightInUnit * 2;
-        float itemSizeY = Mathf.Max(itemSizeX, itemSizeX) / heightCoefficient;
+        float itemSizeX = Mathf.Abs(gameRectangleLeftTop.x) / (float)fieldWidthInUnit * 2;
+        float itemSizeZ = Mathf.Abs(gameRectangleLeftTop.z) / (float)fieldHeightInUnit * 2;
+        float itemSizeY = Mathf.Max(itemSizeX, itemSizeZ) / heightCoefficient;
 
         return new Vector3(itemSizeX, itemSizeY, itemSizeZ);
     }
