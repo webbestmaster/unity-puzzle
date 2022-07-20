@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject prefabBottomDesk;
     [SerializeField] private GameObject prefabBorder;
     [SerializeField] private GameObject prefabItem;
-    private int fieldWidthInUnit = 3;
-    private int fieldHeightInUnit = 2;
+    private int fieldWidthInUnit = 16;
+    private int fieldHeightInUnit = 8;
     private float fullFieldWidth = 10f;
     private float fullFieldHeight = 10f;
     private float borderWidth = 0.2f;
@@ -184,7 +184,7 @@ public class GameController : MonoBehaviour
 
         material.mainTextureOffset = new Vector2(
             1f / (float)fieldWidthInUnit * (float)indexX,
-            1f / (float)fieldHeightInUnit * (float)indexZ
+            1f / (float)fieldHeightInUnit * ((float)fieldHeightInUnit - indexZ - 1)
         );
 
         return item;
