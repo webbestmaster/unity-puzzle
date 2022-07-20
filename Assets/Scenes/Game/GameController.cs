@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject prefabBottomDesk;
     [SerializeField] private GameObject prefabBorder;
     [SerializeField] private GameObject prefabItem;
-    private int fieldWidthInUnit = 16;
-    private int fieldHeightInUnit = 8;
+    private int fieldWidthInUnit = 5;
+    private int fieldHeightInUnit = 5;
     private float fullFieldWidth = 10f;
     private float fullFieldHeight = 10f;
     private float borderWidth = 0.2f;
