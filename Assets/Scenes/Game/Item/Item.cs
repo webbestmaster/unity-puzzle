@@ -15,10 +15,15 @@ public class Item : MonoBehaviour
     private bool isVerticalMoveAvailable;
     private Vector3 startMovePoint;
     private Vector3 endMovePoint;
+    private Transform textureHolder;
+    [SerializeField] private Texture mainTexture1;
 
     // Start is called before the first frame update
     private void Start()
     {
+        DefineTexture();
+
+        // textureHolder
         rigitbody = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
     }
@@ -212,5 +217,14 @@ public class Item : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void DefineTexture()
+    {
+        textureHolder = transform.Find("TextureHolder");
+        textureHolder.GetComponent<Renderer>().material.mainTexture = mainTexture1;
+
+        textureHolder.GetComponent<Renderer>().material.mainTextureScale = new Vector2 (0.5f, 0.5f);
+        textureHolder.GetComponent<Renderer>().material.mainTextureOffset = new Vector2 (5f, 5f);
     }
 }
