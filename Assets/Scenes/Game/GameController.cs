@@ -120,10 +120,10 @@ public class GameController : MonoBehaviour
 
         bottomDesk.transform.localScale = newScale;
         
-        Material material = bottomDesk.GetComponent<Renderer>().material;
-        material.mainTexture = mainTexture1;
+        // Material material = bottomDesk.GetComponent<Renderer>().material;
+        // material.mainTexture = mainTexture1;
 
-        material.mainTextureScale = new Vector2(-1, -1);
+        // material.mainTextureScale = new Vector2(-1, -1);
     }
 
     private void AddItemsToScene()
@@ -216,7 +216,8 @@ public class GameController : MonoBehaviour
         float heightCoefficient = 3f;
         float itemSizeX = Mathf.Abs(gameRectangleLeftTop.x) / (float)fieldWidthInUnit * 2;
         float itemSizeZ = Mathf.Abs(gameRectangleLeftTop.z) / (float)fieldHeightInUnit * 2;
-        float itemSizeY = Mathf.Max(itemSizeX, itemSizeZ) / heightCoefficient;
+        // float itemSizeY = Mathf.Max(itemSizeX, itemSizeZ) / heightCoefficient;
+        float itemSizeY = borderHeight * 1.2f;
 
         return new Vector3(itemSizeX, itemSizeY, itemSizeZ);
     }
