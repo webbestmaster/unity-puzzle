@@ -224,7 +224,10 @@ public class Item : MonoBehaviour
         textureHolder = transform.Find("TextureHolder");
         textureHolder.GetComponent<Renderer>().material.mainTexture = mainTexture1;
 
-        textureHolder.GetComponent<Renderer>().material.mainTextureScale = new Vector2 (0.5f, 0.5f);
-        textureHolder.GetComponent<Renderer>().material.mainTextureOffset = new Vector2 (5f, 5f);
+        textureHolder.GetComponent<Renderer>().material.mainTextureScale = new Vector2(0.5f, 0.5f);
+        textureHolder.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(
+             UnityEngine.Random.Range(0f, 10f),
+             UnityEngine.Random.Range(0f, 10f)
+        );
     }
 }
