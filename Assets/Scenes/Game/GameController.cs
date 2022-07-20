@@ -7,8 +7,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject prefabBottomDesk;
     [SerializeField] private GameObject prefabBorder;
     [SerializeField] private GameObject prefabItem;
-    private int fieldWidthInUnit = 6;
-    private int fieldHeightInUnit = 3;
+    private int fieldWidthInUnit = 3;
+    private int fieldHeightInUnit = 2;
     private float fullFieldWidth = 10f;
     private float fullFieldHeight = 10f;
     private float borderWidth = 0.2f;
@@ -119,6 +119,11 @@ public class GameController : MonoBehaviour
         Vector3 newScale = Helper.getScaleForSize(prefabBottomDesk, neededSize);
 
         bottomDesk.transform.localScale = newScale;
+        
+        Material material = bottomDesk.GetComponent<Renderer>().material;
+        material.mainTexture = mainTexture1;
+
+        material.mainTextureScale = new Vector2(-1, -1);
     }
 
     private void AddItemsToScene()
@@ -142,7 +147,7 @@ public class GameController : MonoBehaviour
         float itemSizeY = itemSize.y;
         float xPosition = indexX * itemWidth + itemWidth / 2f + gameRectangleLeftTop.x;
         float zPosition = indexZ * itemHeight + itemHeight / 2f - gameRectangleLeftTop.z;
-        float spaceBetweenItems = Mathf.Max(itemHeight, itemWidth) / 25;
+        float spaceBetweenItems = Mathf.Max(itemHeight, itemWidth) / 50;
 
         GameObject item = Instantiate(prefabItem);
         item.transform.position = new Vector3(
@@ -171,16 +176,16 @@ public class GameController : MonoBehaviour
         item.GetComponent<Item>().cellSize = itemSize;
         item.GetComponent<Item>().itemList = itemList;
 
-        // Transform textureHolder = item.transform.Find("TextureHolder");
-        // Material material = textureHolder.GetComponent<Renderer>().material;
-        // material.mainTexture = mainTexture1;
+        Transform textureHolder = item.transform.Find("TextureHolder");
+        Material material = textureHolder.GetComponent<Renderer>().material;
+        material.mainTexture = mainTexture1;
 
-        // material.mainTextureScale = new Vector2(1f / (float)fieldWidthInUnit, 1f / (float)fieldHeightInUnit);
+        material.mainTextureScale = new Vector2(1f / (float)fieldWidthInUnit, 1f / (float)fieldHeightInUnit);
 
-        
-        // material.mainTextureScale = new Vector2(1f, 1f);
-
-        // material.mainTextureOffset = new Vector2(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
+        material.mainTextureOffset = new Vector2(
+            1f / (float)fieldWidthInUnit * (float)indexX,
+            1f / (float)fieldHeightInUnit * (float)indexZ
+        );
 
         return item;
     }
