@@ -142,10 +142,10 @@ public class Item : MonoBehaviour
         OnMouseUp();
     }
 
-    private void OnMouseEnter()
-    {
-        OnMouseDown();
-    }
+    // private void OnMouseEnter()
+    // {
+        // OnMouseDown();
+    // }
 
     public Vector3 GetNearestSnapPoint()
     {
