@@ -137,10 +137,10 @@ public class Item : MonoBehaviour
         transform.position = GetNearestSnapPoint();
     }
 
-    void OnMouseExit()
-    {
-        OnMouseUp();
-    }
+    // void OnMouseExit()
+    // {
+    //     OnMouseUp();
+    // }
 
     // private void OnMouseEnter()
     // {
