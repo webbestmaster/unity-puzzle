@@ -19,6 +19,11 @@ public class GameController : MonoBehaviour
     private Vector3 gameRectangleBottomRight;
     [SerializeField] private Texture mainTexture1;
 
+    private void Awake()
+    {
+        Application.targetFrameRate = 120;
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
