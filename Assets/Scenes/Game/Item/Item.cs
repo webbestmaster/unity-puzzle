@@ -14,6 +14,7 @@ public class Item : MonoBehaviour
     private bool isHorizontalMoveAvailable;
     private bool isVerticalMoveAvailable;
     private Vector3 startMovePoint;
+
     private Vector3 endMovePoint;
     // private Transform textureHolder;
     // [SerializeField] private Texture mainTexture1;
@@ -124,6 +125,12 @@ public class Item : MonoBehaviour
 
         // Destroy the gameObject after clicking on it
         isActive = true;
+
+        Outline outline = gameObject.GetComponent<Outline>();
+
+        outline.OutlineMode = Outline.Mode.OutlineAll;
+        outline.OutlineColor = new Color(1f, 1f, 1f, 1f);
+        outline.OutlineWidth = 2f;
     }
 
     void OnMouseUp()
@@ -135,6 +142,9 @@ public class Item : MonoBehaviour
         isActive = true;
 
         transform.position = GetNearestSnapPoint();
+
+        Outline outline = gameObject.GetComponent<Outline>();
+        outline.OutlineWidth = 0f;
     }
 
     // void OnMouseExit()
@@ -144,7 +154,7 @@ public class Item : MonoBehaviour
 
     // private void OnMouseEnter()
     // {
-        // OnMouseDown();
+    // OnMouseDown();
     // }
 
     public Vector3 GetNearestSnapPoint()
