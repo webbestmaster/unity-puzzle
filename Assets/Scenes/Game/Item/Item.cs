@@ -35,13 +35,36 @@ public class Item : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+
+        if (isActive == false)
+        {
+            return;
+        }
+        
         Vector3? pointer = GetPointPosition();
 
-        if (!Input.GetMouseButton(0))
+        if (pointer == null)
         {
-            isActive = false;
+            return;
         }
 
+        float minX = Mathf.Min(startMovePoint.x, endMovePoint.x); 
+        float maxX = Mathf.Max(startMovePoint.x, endMovePoint.x); 
+        float minZ = Mathf.Min(startMovePoint.z, endMovePoint.z); 
+        float maxZ = Mathf.Max(startMovePoint.z, endMovePoint.z);
+
+        float endX = Helper.limitFloat(minX, pointer.Value.x, maxX);
+        float endZ = Helper.limitFloat(minZ, pointer.Value.z, maxZ);
+
+        gameObject.transform.position = new Vector3(
+            endX,
+            gameObject.transform.position.y,
+            endZ
+        );
+        
+        return;
+        
+        
         if (pointer != null && isActive && (isHorizontalMoveAvailable || isVerticalMoveAvailable))
         {
             // Debug.Log("pos " + transform.position);
@@ -130,7 +153,7 @@ public class Item : MonoBehaviour
 
         outline.OutlineMode = Outline.Mode.OutlineAll;
         outline.OutlineColor = new Color(1f, 1f, 1f, 1f);
-        outline.OutlineWidth = 2f;
+        outline.OutlineWidth = 4f;
     }
 
     void OnMouseUp()
@@ -138,8 +161,7 @@ public class Item : MonoBehaviour
         isHorizontalMoveAvailable = false;
         isVerticalMoveAvailable = false;
 
-        // Destroy the gameObject after clicking on it
-        isActive = true;
+        isActive = false;
 
         transform.position = GetNearestSnapPoint();
 

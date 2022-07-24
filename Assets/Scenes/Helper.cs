@@ -20,4 +20,19 @@ public class Helper : MonoBehaviour
             Mathf.Abs(realSizeZ) < minSize ? 1 : (newSize.z / realSizeZ)
         );
     }
+
+    static public float limitFloat(float min, float value, float max)
+    {
+        if (value < min)
+        {
+            return min;
+        }
+
+        if (value > max)
+        {
+            return max;
+        }
+
+        return value;
+    }
 }
