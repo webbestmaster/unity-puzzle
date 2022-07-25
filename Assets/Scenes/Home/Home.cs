@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Home : MonoBehaviour
 {
+    private void Awake()
+    {
+        Application.targetFrameRate = 30;
+    }
+
     // Start is called before the first frame update
     private void Start()
     {

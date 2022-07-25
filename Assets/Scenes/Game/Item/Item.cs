@@ -11,8 +11,8 @@ public class Item : MonoBehaviour
     public List<Vector3> spanPointList = new List<Vector3>();
     public Vector3 cellSize;
     public List<GameObject> itemList = new List<GameObject>();
-    private bool isHorizontalMoveAvailable;
-    private bool isVerticalMoveAvailable;
+    // private bool isHorizontalMoveAvailable;
+    // private bool isVerticalMoveAvailable;
     private Vector3 startMovePoint;
 
     private Vector3 endMovePoint;
@@ -22,7 +22,7 @@ public class Item : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        DefineTexture();
+        // DefineTexture();
 
         // textureHolder
         rigitbody = GetComponent<Rigidbody>();
@@ -32,15 +32,16 @@ public class Item : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        /*
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-
+        */
 
         if (isActive == false)
         {
             return;
         }
-        
+
         Vector3? pointer = GetPointPosition();
 
         if (pointer == null)
@@ -48,9 +49,9 @@ public class Item : MonoBehaviour
             return;
         }
 
-        float minX = Mathf.Min(startMovePoint.x, endMovePoint.x); 
-        float maxX = Mathf.Max(startMovePoint.x, endMovePoint.x); 
-        float minZ = Mathf.Min(startMovePoint.z, endMovePoint.z); 
+        float minX = Mathf.Min(startMovePoint.x, endMovePoint.x);
+        float maxX = Mathf.Max(startMovePoint.x, endMovePoint.x);
+        float minZ = Mathf.Min(startMovePoint.z, endMovePoint.z);
         float maxZ = Mathf.Max(startMovePoint.z, endMovePoint.z);
 
         float endX = Helper.limitFloat(minX, pointer.Value.x, maxX);
@@ -61,10 +62,9 @@ public class Item : MonoBehaviour
             gameObject.transform.position.y,
             endZ
         );
-        
-        return;
-        
-        
+
+
+        /*
         if (pointer != null && isActive && (isHorizontalMoveAvailable || isVerticalMoveAvailable))
         {
             // Debug.Log("pos " + transform.position);
@@ -97,28 +97,11 @@ public class Item : MonoBehaviour
 
             rigitbody.MovePosition(moveVector);
         }
+    */
     }
 
     private Vector3? GetPointPosition()
     {
-        // Debug.Log("Input.touchCount: " + Input.touchCount);
-        // Debug.Log("Input.mousePosition.x: " + Input.mousePosition.x);
-
-        /*
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            return m_MainCamera.ScreenToWorldPoint(
-                new Vector3(
-                    touch.position.x,
-                    touch.position.y,
-                    m_MainCamera.transform.position.y
-                )
-            );
-        }
-        */
-
         if (Input.GetMouseButton(0))
         {
             return mainCamera
@@ -136,9 +119,6 @@ public class Item : MonoBehaviour
 
     void OnMouseDown()
     {
-        isHorizontalMoveAvailable = GetIsHorizontalMoveAvailable();
-        isVerticalMoveAvailable = GetIsVerticalMoveAvailable();
-
         startMovePoint = new Vector3(
             transform.position.x,
             transform.position.y,
@@ -146,7 +126,11 @@ public class Item : MonoBehaviour
         );
         endMovePoint = GetFreeSpanPoint();
 
-        // Destroy the gameObject after clicking on it
+        if ((startMovePoint - endMovePoint).magnitude > cellSize.x * 1.01)
+        {
+            return;
+        }
+
         isActive = true;
 
         Outline outline = gameObject.GetComponent<Outline>();
@@ -158,8 +142,8 @@ public class Item : MonoBehaviour
 
     void OnMouseUp()
     {
-        isHorizontalMoveAvailable = false;
-        isVerticalMoveAvailable = false;
+        // isHorizontalMoveAvailable = false;
+        // isVerticalMoveAvailable = false;
 
         isActive = false;
 
@@ -194,6 +178,7 @@ public class Item : MonoBehaviour
         return candidat;
     }
 
+    /*
     private bool GetIsHorizontalMoveAvailable()
     {
         Vector3 freeSnapPoint = GetFreeSpanPoint();
@@ -206,7 +191,9 @@ public class Item : MonoBehaviour
 
         return false;
     }
+    */
 
+    /*
     private bool GetIsVerticalMoveAvailable()
     {
         Vector3 freeSnapPoint = GetFreeSpanPoint();
@@ -219,6 +206,7 @@ public class Item : MonoBehaviour
 
         return false;
     }
+    */
 
     private Vector3 GetFreeSpanPoint()
     {
@@ -251,6 +239,7 @@ public class Item : MonoBehaviour
         return false;
     }
 
+    /*
     private void DefineTexture()
     {
         // textureHolder = transform.Find("TextureHolder");
@@ -260,4 +249,5 @@ public class Item : MonoBehaviour
         // material.mainTextureScale = new Vector2(2f, 2f);
         // material.mainTextureOffset = new Vector2(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
     }
+*/
 }
