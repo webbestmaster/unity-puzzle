@@ -119,11 +119,6 @@ public class GameController : MonoBehaviour
         Vector3 newScale = Helper.getScaleForSize(prefabBottomDesk, neededSize);
 
         bottomDesk.transform.localScale = newScale;
-        
-        // Material material = bottomDesk.GetComponent<Renderer>().material;
-        // material.mainTexture = mainTexture1;
-
-        // material.mainTextureScale = new Vector2(-1, -1);
     }
 
     private void AddItemsToScene()

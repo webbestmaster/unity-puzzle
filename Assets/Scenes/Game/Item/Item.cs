@@ -11,32 +11,18 @@ public class Item : MonoBehaviour
     public List<Vector3> spanPointList = new List<Vector3>();
     public Vector3 cellSize;
     public List<GameObject> itemList = new List<GameObject>();
-    // private bool isHorizontalMoveAvailable;
-    // private bool isVerticalMoveAvailable;
     private Vector3 startMovePoint;
 
     private Vector3 endMovePoint;
-    // private Transform textureHolder;
-    // [SerializeField] private Texture mainTexture1;
 
-    // Start is called before the first frame update
     private void Start()
     {
-        // DefineTexture();
-
-        // textureHolder
         rigitbody = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        /*
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        */
-
         if (isActive == false)
         {
             return;
@@ -62,42 +48,6 @@ public class Item : MonoBehaviour
             gameObject.transform.position.y,
             endZ
         );
-
-
-        /*
-        if (pointer != null && isActive && (isHorizontalMoveAvailable || isVerticalMoveAvailable))
-        {
-            // Debug.Log("pos " + transform.position);
-            // Debug.Log("def " + defaultPosition);
-            Vector3 moveVector =
-                isHorizontalMoveAvailable
-                    ? new Vector3(pointer.Value.x, transform.position.y, transform.position.z)
-                    : new Vector3(transform.position.x, transform.position.y, pointer.Value.z);
-
-            if (isHorizontalMoveAvailable)
-            {
-                float minPositionX = Mathf.Min(startMovePoint.x, endMovePoint.x);
-                float maxPositionX = Mathf.Max(startMovePoint.x, endMovePoint.x);
-
-                if (moveVector.x > maxPositionX || moveVector.x < minPositionX)
-                {
-                    return;
-                }
-            }
-            else
-            {
-                float minPositionZ = Mathf.Min(startMovePoint.z, endMovePoint.z);
-                float maxPositionZ = Mathf.Max(startMovePoint.z, endMovePoint.z);
-
-                if (moveVector.z > maxPositionZ || moveVector.z < minPositionZ)
-                {
-                    return;
-                }
-            }
-
-            rigitbody.MovePosition(moveVector);
-        }
-    */
     }
 
     private Vector3? GetPointPosition()
@@ -142,9 +92,6 @@ public class Item : MonoBehaviour
 
     void OnMouseUp()
     {
-        // isHorizontalMoveAvailable = false;
-        // isVerticalMoveAvailable = false;
-
         isActive = false;
 
         transform.position = GetNearestSnapPoint();
@@ -152,16 +99,6 @@ public class Item : MonoBehaviour
         Outline outline = gameObject.GetComponent<Outline>();
         outline.OutlineWidth = 0f;
     }
-
-    // void OnMouseExit()
-    // {
-    //     OnMouseUp();
-    // }
-
-    // private void OnMouseEnter()
-    // {
-    // OnMouseDown();
-    // }
 
     public Vector3 GetNearestSnapPoint()
     {
@@ -177,37 +114,7 @@ public class Item : MonoBehaviour
 
         return candidat;
     }
-
-    /*
-    private bool GetIsHorizontalMoveAvailable()
-    {
-        Vector3 freeSnapPoint = GetFreeSpanPoint();
-
-        if (Mathf.Abs(transform.position.x - freeSnapPoint.x) < cellSize.x * 1.01 &&
-            Mathf.Abs(transform.position.z - freeSnapPoint.z) < cellSize.z * 0.01)
-        {
-            return true;
-        }
-
-        return false;
-    }
-    */
-
-    /*
-    private bool GetIsVerticalMoveAvailable()
-    {
-        Vector3 freeSnapPoint = GetFreeSpanPoint();
-
-        if (Mathf.Abs(transform.position.x - freeSnapPoint.x) < cellSize.x * 0.01 &&
-            Mathf.Abs(transform.position.z - freeSnapPoint.z) < cellSize.z * 1.01)
-        {
-            return true;
-        }
-
-        return false;
-    }
-    */
-
+    
     private Vector3 GetFreeSpanPoint()
     {
         foreach (Vector3 snapPoint in spanPointList)
@@ -238,16 +145,4 @@ public class Item : MonoBehaviour
 
         return false;
     }
-
-    /*
-    private void DefineTexture()
-    {
-        // textureHolder = transform.Find("TextureHolder");
-        // Material material = textureHolder.GetComponent<Renderer>().material;
-        // material.mainTexture = mainTexture1;
-
-        // material.mainTextureScale = new Vector2(2f, 2f);
-        // material.mainTextureOffset = new Vector2(UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(0f, 10f));
-    }
-*/
 }
