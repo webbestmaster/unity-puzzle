@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject prefabBottomDesk;
     [SerializeField] private GameObject prefabBorder;
     [SerializeField] private GameObject prefabItem;
-    private int fieldWidthInUnit = 5;
-    private int fieldHeightInUnit = 5;
+    private int fieldWidthInUnit = 3;
+    private int fieldHeightInUnit = 3;
     private float fullFieldWidth = 10f;
     private float fullFieldHeight = 10f;
     private float borderWidth = 0.2f;
@@ -31,18 +33,16 @@ public class GameController : MonoBehaviour
         AddBottomDaskToScene();
         AddBordersToScene();
         AddItemsToScene();
-    }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        Vector3 scale = Helper.getScaleForSize(prefabBottomDesk, new Vector3(16, 1, 16));
-        // Debug.Log("scale: " + scale);
+        for (int i = 0; i < 1000; i++)
+        {
+            ItemMoveRandom();
+        }
     }
 
     private void DefineGameRectangle()
     {
-        float aspectRatio = (float)fieldWidthInUnit / (float)fieldHeightInUnit;
+        float aspectRatio = (float)fieldWidthInUnit / fieldHeightInUnit;
 
         if (aspectRatio >= 1)
         {
@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
 
     private void AddBordersToScene()
     {
-        float aspectRatio = (float)fieldWidthInUnit / (float)fieldHeightInUnit;
+        float aspectRatio = (float)fieldWidthInUnit / fieldHeightInUnit;
 
         GameObject topBorder = Instantiate(prefabBorder);
         GameObject bottomBorder = Instantiate(prefabBorder);
@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour
     {
         GameObject bottomDesk = Instantiate(prefabBottomDesk);
 
-        float aspectRatio = (float)fieldWidthInUnit / (float)fieldHeightInUnit;
+        float aspectRatio = (float)fieldWidthInUnit / fieldHeightInUnit;
 
         Vector3 neededSize = aspectRatio >= 1
             ? new Vector3(fullFieldWidth + borderWidth * 2, 1, fullFieldHeight / aspectRatio + borderWidth * 2)
@@ -175,11 +175,11 @@ public class GameController : MonoBehaviour
         Material material = textureHolder.GetComponent<Renderer>().material;
         material.mainTexture = mainTexture1;
 
-        material.mainTextureScale = new Vector2(1f / (float)fieldWidthInUnit, 1f / (float)fieldHeightInUnit);
+        material.mainTextureScale = new Vector2(1f / fieldWidthInUnit, 1f / fieldHeightInUnit);
 
         material.mainTextureOffset = new Vector2(
-            1f / (float)fieldWidthInUnit * (float)indexX,
-            1f / (float)fieldHeightInUnit * ((float)fieldHeightInUnit - indexZ - 1)
+            1f / fieldWidthInUnit * indexX,
+            1f / fieldHeightInUnit * ((float)fieldHeightInUnit - indexZ - 1)
         );
 
         return item;
@@ -207,13 +207,108 @@ public class GameController : MonoBehaviour
 
     private Vector3 GetItemSize()
     {
-        // 3f - actually magic number, just make item more plan
-        float heightCoefficient = 3f;
-        float itemSizeX = Mathf.Abs(gameRectangleLeftTop.x) / (float)fieldWidthInUnit * 2;
-        float itemSizeZ = Mathf.Abs(gameRectangleLeftTop.z) / (float)fieldHeightInUnit * 2;
-        // float itemSizeY = Mathf.Max(itemSizeX, itemSizeZ) / heightCoefficient;
+        float itemSizeX = Mathf.Abs(gameRectangleLeftTop.x) / fieldWidthInUnit * 2;
+        float itemSizeZ = Mathf.Abs(gameRectangleLeftTop.z) / fieldHeightInUnit * 2;
         float itemSizeY = borderHeight * 1.2f;
 
         return new Vector3(itemSizeX, itemSizeY, itemSizeZ);
     }
+
+    private Vector3 GetFreeSpanPoint()
+    {
+        foreach (Vector3 snapPoint in spanPointList)
+        {
+            if (!GetIsSpanPointUnderItem(snapPoint))
+            {
+                return snapPoint;
+            }
+        }
+
+        return new Vector3(Int32.MaxValue, Int32.MaxValue, Int32.MaxValue);
+    }
+    private bool GetIsSpanPointUnderItem(Vector3 spanPoint)
+    {
+        Vector3 itemSize = GetItemSize();
+
+        // less than 0.01% of diagonal
+        float minDistance = itemSize.magnitude / 10000;
+
+        foreach (GameObject item in itemList)
+        {
+            float distance = Vector3.Distance(spanPoint, item.transform.position);
+
+            if (distance < minDistance && item.activeSelf)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    [CanBeNull]
+    private GameObject GetItemByPosition(Vector3 itemPosition)
+    {
+        Vector3 itemSize = GetItemSize();
+
+        // less than 0.01% of diagonal
+        float minDistance = itemSize.magnitude / 10000;
+
+        foreach (GameObject item in itemList)
+        {
+            float distance = Vector3.Distance(itemPosition, item.transform.position);
+
+            if (distance < minDistance && item.activeSelf)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    } 
+    
+    private bool ItemMove(int xUnit, int zUnit)
+    {
+        Vector3 freeSnapPoint = GetFreeSpanPoint();
+        Vector3 itemSize = GetItemSize();
+        Vector3 deltaVector = new Vector3(itemSize.x * xUnit, 0f, itemSize.z * zUnit);
+        Vector3 itemPosition = freeSnapPoint + deltaVector;
+
+        GameObject? item = GetItemByPosition(itemPosition);
+
+        if (item != null)
+        {
+            item.transform.position -= deltaVector;
+            return true;
+        }
+        
+        return false;
+    }
+
+    private bool ItemMoveRandom()
+    {
+        int direction = Random.Range(0, 4);
+
+        switch (direction)
+        {
+            case 0:
+                // Up
+                return ItemMove(0, -1);
+            case 1:
+                // Right
+                return ItemMove(-1, 0);
+            case 2:
+                // Down
+                return ItemMove(0, 1);
+            case 3:
+                // Left
+                return ItemMove(1, 0);
+            default:
+                Debug.LogWarning("Can not detect direction: " + direction);
+                break;
+        }
+
+        return false;
+    }
+    
 }
