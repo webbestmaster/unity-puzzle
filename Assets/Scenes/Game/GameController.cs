@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
         AddBordersToScene();
         AddItemsToScene();
 
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 10; i++)
         {
             ItemMoveRandom();
         }
@@ -173,7 +173,8 @@ public class GameController : MonoBehaviour
         item.GetComponent<Item>().spanPointList = spanPointList;
         item.GetComponent<Item>().cellSize = itemSize;
         item.GetComponent<Item>().itemList = itemList;
-
+        item.GetComponent<Item>().OnGameEnd = OnGameEnd;
+        
         Transform textureHolder = item.transform.Find("TextureHolder");
         Material material = textureHolder.GetComponent<Renderer>().material;
         material.mainTexture = mainTexture1;
@@ -188,6 +189,12 @@ public class GameController : MonoBehaviour
         return item;
     }
 
+    public bool OnGameEnd()
+    {
+        Debug.Log("GameController OnGameEnd");
+        return true; 
+    }
+    
     private void PopulateSnapPoints()
     {
         Vector3 itemSize = GetItemSize();

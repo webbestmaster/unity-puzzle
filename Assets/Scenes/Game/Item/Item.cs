@@ -12,9 +12,9 @@ public class Item : MonoBehaviour
     public Vector3 cellSize;
     public List<GameObject> itemList = new List<GameObject>();
     private Vector3 startMovePoint;
-
+    public Func<bool> OnGameEnd;
     private Vector3 endMovePoint;
-
+    
     private void Start()
     {
         rigitbody = GetComponent<Rigidbody>();
@@ -98,6 +98,11 @@ public class Item : MonoBehaviour
 
         Outline outline = gameObject.GetComponent<Outline>();
         outline.OutlineWidth = 0f;
+
+        if (GetIsPuzzleSolved())
+        {
+            OnGameEnd();
+        }
     }
 
     public Vector3 GetNearestSnapPoint()
@@ -114,7 +119,7 @@ public class Item : MonoBehaviour
 
         return candidat;
     }
-    
+
     private Vector3 GetFreeSpanPoint()
     {
         foreach (Vector3 snapPoint in spanPointList)
@@ -144,5 +149,25 @@ public class Item : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool GetIsPuzzleSolved()
+    {
+        Debug.Log("isPuzzleSolved");
+
+        foreach (GameObject item in itemList)
+        {
+            if (item.GetComponent<Item>().GetIsOnDefaultPlace() == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool GetIsOnDefaultPlace()
+    {
+        return (defaultPosition - transform.position).magnitude < (cellSize.magnitude * 0.001);
     }
 }
