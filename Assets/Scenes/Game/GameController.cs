@@ -20,7 +20,8 @@ public class GameController : MonoBehaviour
     private Vector3 gameRectangleLeftTop;
     private Vector3 gameRectangleBottomRight;
     [SerializeField] private Texture mainTexture1;
-    
+    private bool isGameStarted = false;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -38,6 +39,8 @@ public class GameController : MonoBehaviour
         {
             ItemMoveRandom();
         }
+
+        isGameStarted = true;
     }
 
     private void DefineGameRectangle()
@@ -226,6 +229,7 @@ public class GameController : MonoBehaviour
 
         return new Vector3(Int32.MaxValue, Int32.MaxValue, Int32.MaxValue);
     }
+
     private bool GetIsSpanPointUnderItem(Vector3 spanPoint)
     {
         Vector3 itemSize = GetItemSize();
@@ -265,8 +269,8 @@ public class GameController : MonoBehaviour
         }
 
         return null;
-    } 
-    
+    }
+
     private bool ItemMove(int xUnit, int zUnit)
     {
         Vector3 freeSnapPoint = GetFreeSpanPoint();
@@ -281,7 +285,7 @@ public class GameController : MonoBehaviour
             item.transform.position -= deltaVector;
             return true;
         }
-        
+
         return false;
     }
 
@@ -310,5 +314,4 @@ public class GameController : MonoBehaviour
 
         return false;
     }
-    
 }
