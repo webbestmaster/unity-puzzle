@@ -189,10 +189,9 @@ public class GameController : MonoBehaviour
         return item;
     }
 
-    public bool OnGameEnd()
+    public void OnGameEnd()
     {
         Debug.Log("GameController OnGameEnd");
-        return true; 
     }
     
     private void PopulateSnapPoints()

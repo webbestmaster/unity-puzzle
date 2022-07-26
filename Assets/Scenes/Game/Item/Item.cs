@@ -12,7 +12,7 @@ public class Item : MonoBehaviour
     public Vector3 cellSize;
     public List<GameObject> itemList = new List<GameObject>();
     private Vector3 startMovePoint;
-    public Func<bool> OnGameEnd;
+    public Action OnGameEnd;
     private Vector3 endMovePoint;
     
     private void Start()
