@@ -21,7 +21,8 @@ public class SelectImage : MonoBehaviour
     public void HandleSelectImage()
     {
         Image image = GetComponent<Image>();
-        Debug.Log(image.sprite.rect.position);
+        
+        PlayerPrefs.SetString(SavedDataKey.SpriteName, image.sprite.name);
 
         SceneManager.LoadScene("Game");
 

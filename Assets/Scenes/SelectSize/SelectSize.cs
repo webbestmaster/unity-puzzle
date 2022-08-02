@@ -1,7 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+struct SavedDataKey
+{
+    public const string HeightInUnit = "heightInUnit";
+    public const string WidthInUnit = "widthInUnit";
+    public const string SpriteName = "";
+}
 
 public class SelectSize : MonoBehaviour
 {
@@ -15,10 +20,9 @@ public class SelectSize : MonoBehaviour
     
     public void HandleSelectSize()
     {
-        PlayerPrefs.SetInt("heightInUnit", heightInUnit);
-        PlayerPrefs.SetInt("widthInUnit", widthInUnit);
+        PlayerPrefs.SetInt(SavedDataKey.HeightInUnit, heightInUnit);
+        PlayerPrefs.SetInt(SavedDataKey.WidthInUnit, widthInUnit);
         
         SceneManager.LoadScene("SelectImage");
     }
-    
 }

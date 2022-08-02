@@ -19,12 +19,21 @@ public class GameController : MonoBehaviour
     private List<GameObject> itemList = new List<GameObject>();
     private Vector3 gameRectangleLeftTop;
     private Vector3 gameRectangleBottomRight;
-    [SerializeField] private Texture mainTexture1;
+    private Texture mainTexture;
     private bool isGameStarted = false;
 
     // Start is called before the first frame update
     private void Start()
     {
+        fieldWidthInUnit = PlayerPrefs.GetInt(SavedDataKey.WidthInUnit);
+        fieldHeightInUnit = PlayerPrefs.GetInt(SavedDataKey.HeightInUnit);
+
+        String spriteName = PlayerPrefs.GetString(SavedDataKey.SpriteName);
+        
+        Sprite sprite = Resources.Load<Sprite>("Cat/" + spriteName);
+        
+        mainTexture = sprite.texture;
+        
         // DefineGameRectangle - should be first to define the available to game area 
         DefineGameRectangle();
 
@@ -170,14 +179,16 @@ public class GameController : MonoBehaviour
             item.SetActive(false);
         }
 
-        item.GetComponent<Item>().spanPointList = spanPointList;
-        item.GetComponent<Item>().cellSize = itemSize;
-        item.GetComponent<Item>().itemList = itemList;
-        item.GetComponent<Item>().OnGameEnd = OnGameEnd;
+        Item itemScript = item.GetComponent<Item>();
         
+        itemScript.spanPointList = spanPointList;
+        itemScript.cellSize = itemSize;
+        itemScript.itemList = itemList;
+        itemScript.OnGameEnd = OnGameEnd;
+
         Transform textureHolder = item.transform.Find("TextureHolder");
         Material material = textureHolder.GetComponent<Renderer>().material;
-        material.mainTexture = mainTexture1;
+        material.mainTexture = mainTexture;
 
         material.mainTextureScale = new Vector2(1f / fieldWidthInUnit, 1f / fieldHeightInUnit);
 
@@ -193,7 +204,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("GameController OnGameEnd");
     }
-    
+
     private void PopulateSnapPoints()
     {
         Vector3 itemSize = GetItemSize();
