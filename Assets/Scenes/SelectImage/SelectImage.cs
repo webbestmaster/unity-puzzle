@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SelectImage : MonoBehaviour
 {
@@ -14,5 +16,14 @@ public class SelectImage : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void HandleSelectImage()
+    {
+        Image image = GetComponent<Image>();
+        Debug.Log(image.sprite.rect.position);
+
+        SceneManager.LoadScene("Game");
+
     }
 }

@@ -12,7 +12,7 @@ public class SelectSize : MonoBehaviour
     {
         Application.targetFrameRate = 30;
     }
-
+    
     public void HandleSelectSize()
     {
         PlayerPrefs.SetInt("heightInUnit", heightInUnit);
