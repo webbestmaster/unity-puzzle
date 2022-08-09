@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameUiManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public ModelValue<bool> gameOverPopupOpen = new ModelValue<bool>(false);
+
+    private void Start()
     {
+        gameOverPopupOpen.AddListener(() =>
+        {
+            Debug.Log("123");
+        });
+
+        gameOverPopupOpen.SetValue(true);
         
+        Debug.Log(gameOverPopupOpen.GetValue());
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
-        
+        gameOverPopupOpen.OnDestroy(); 
     }
 }
