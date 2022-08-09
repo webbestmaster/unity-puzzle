@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject prefabBottomDesk;
     [SerializeField] private GameObject prefabBorder;
     [SerializeField] private GameObject prefabItem;
+    [SerializeField] private GameObject GameUiManager;
     private int fieldWidthInUnit = 3;
     private int fieldHeightInUnit = 3;
     private float fullFieldWidth = 10f;
@@ -202,6 +203,8 @@ public class GameController : MonoBehaviour
 
     public void OnGameEnd()
     {
+        GameUiManager.GetComponent<GameUiManager>().gameOverPopupOpen.SetValue(true);
+
         Debug.Log("GameController OnGameEnd");
     }
 
