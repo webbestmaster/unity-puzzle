@@ -13,6 +13,16 @@ public static class SomeEventManagerTemplate
     {
         gameSomeAction?.Invoke(argument);
     }
+
+    public static void OnDestroy()
+    {
+        Delegate[] clientList = gameSomeAction?.GetInvocationList();
+
+        foreach (Delegate clientAction in clientList)
+        {
+            gameSomeAction -= (clientAction as SomeAction);
+        }
+    }
 }
 
 /*
