@@ -1,10 +1,15 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class Item : MonoBehaviour
 {
     private Rigidbody rigitbody;
+
+    [SerializeField, Header("List of stone move sound")]
+    private AudioClip[] audioClipList;
+
     private bool isActive;
     private Camera mainCamera;
     public Vector3 defaultPosition;
@@ -14,7 +19,7 @@ public class Item : MonoBehaviour
     private Vector3 startMovePoint;
     public Action OnGameEnd;
     private Vector3 endMovePoint;
-    
+
     private void Start()
     {
         rigitbody = GetComponent<Rigidbody>();
@@ -35,6 +40,7 @@ public class Item : MonoBehaviour
             return;
         }
 
+
         float minX = Mathf.Min(startMovePoint.x, endMovePoint.x);
         float maxX = Mathf.Max(startMovePoint.x, endMovePoint.x);
         float minZ = Mathf.Min(startMovePoint.z, endMovePoint.z);
@@ -50,6 +56,17 @@ public class Item : MonoBehaviour
         );
     }
 
+    private void PlaySshhh()
+    {
+        AudioSource audio = GetComponent<AudioSource>();
+
+        if (audio != null && audio.isPlaying != true)
+        {
+            audio.clip = audioClipList[Random.Range(0, audioClipList.Length)];
+            audio.Play();
+        }
+    }
+    
     private Vector3? GetPointPosition()
     {
         if (Input.GetMouseButton(0))
@@ -83,6 +100,8 @@ public class Item : MonoBehaviour
 
         isActive = true;
 
+        PlaySshhh();
+        
         Outline outline = gameObject.GetComponent<Outline>();
 
         outline.OutlineMode = Outline.Mode.OutlineAll;
@@ -98,6 +117,8 @@ public class Item : MonoBehaviour
 
         Outline outline = gameObject.GetComponent<Outline>();
         outline.OutlineWidth = 0f;
+
+        PlaySshhh();
 
         if (GetIsPuzzleSolved())
         {
