@@ -100,7 +100,7 @@ public class Item : MonoBehaviour
 
         isActive = true;
 
-        PlaySshhh();
+        // PlaySshhh();
         
         Outline outline = gameObject.GetComponent<Outline>();
 
@@ -118,7 +118,7 @@ public class Item : MonoBehaviour
         Outline outline = gameObject.GetComponent<Outline>();
         outline.OutlineWidth = 0f;
 
-        PlaySshhh();
+        // PlaySshhh();
 
         if (GetIsPuzzleSolved())
         {
