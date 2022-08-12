@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class SoundManager : MonoBehaviour
 {
-    [Header("Background sounds")] [SerializeField]
+    [Header("Background sounds"), SerializeField]
     private AudioClip[] clipList;
 
     private AudioSource audioSource;
