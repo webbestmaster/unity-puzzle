@@ -54,7 +54,7 @@ public class SoundManager : MonoBehaviour
     {
         int clipListLength = clipList.Length;
 
-        if (clipListLength == 1 || clipListLength == 0)
+        if (clipListLength <= 1)
         {
             return 0;
         }
