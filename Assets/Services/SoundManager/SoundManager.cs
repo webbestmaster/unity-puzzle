@@ -17,6 +17,9 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        
+        // Debug.Log(Application.systemLanguage);
+
         // If there is an instance, and it's not me, delete myself.
 
         if (Instance != null && Instance != this)
