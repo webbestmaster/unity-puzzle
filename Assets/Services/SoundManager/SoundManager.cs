@@ -31,16 +31,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void SetupAudioSource()
     {
         audioSource = GetComponent<AudioSource>();
 
         audioSource.mute = false;
         audioSource.playOnAwake = false;
         audioSource.loop = false;
+        audioSource.volume = 0.5f;
         // pitch - actually playing speed
         // audioSource.pitch = 32f;
-
+    }
+    
+    private void Start()
+    {
+        SetupAudioSource();
         currentIndex = isShuft ? GetNextClipIndex() : currentIndex;
         isPlaying = true;
     }

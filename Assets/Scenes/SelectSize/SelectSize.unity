@@ -1470,6 +1470,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6947333635018421844, guid: ec9ea00f1dfb42546beea34ef1d1707b, type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6947333635018421844, guid: ec9ea00f1dfb42546beea34ef1d1707b, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5837021428090878482, guid: ec9ea00f1dfb42546beea34ef1d1707b, type: 3}
       propertyPath: m_Name
       value: SoundManager
