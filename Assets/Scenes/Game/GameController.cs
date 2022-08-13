@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
