@@ -2,6 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     [Header("Background sounds"), SerializeField]
