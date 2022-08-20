@@ -351,8 +351,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 320, y: 320}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0.5
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -375,7 +375,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -590,11 +590,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 150438333840844467, guid: 9a9eca28541e32543891aaf91b354eb2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 658.1864
+      value: 658
       objectReference: {fileID: 0}
     - target: {fileID: 150438333840844467, guid: 9a9eca28541e32543891aaf91b354eb2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 416.1233
+      value: 416
       objectReference: {fileID: 0}
     - target: {fileID: 150438333840844467, guid: 9a9eca28541e32543891aaf91b354eb2, type: 3}
       propertyPath: m_LocalScale.x
