@@ -1652,6 +1652,10 @@ PrefabInstance:
       propertyPath: m_IsGlobal
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2660172016105917837, guid: 4a16c008760568b4c8aad92849fb868a, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b80fc6cb0f4bb34ea04e961255a07b4, type: 2}
     - target: {fileID: 2660172016105917839, guid: 4a16c008760568b4c8aad92849fb868a, type: 3}
       propertyPath: m_Enabled
       value: 1
